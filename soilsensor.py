@@ -1,13 +1,14 @@
 import serial
 import requests
 import time
+import json
 
 # Serial port settings (update COM port as needed)
 arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Replace 'COM3' with your Arduino port
 
 # Replace with your GitHub Pages repository (static JSON file or endpoint)
-DATA_URL = "https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/data.json"
-TOKEN = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
+DATA_URL = "https://api.github.com/repos/rcg270/soilsense/contents/data.json "
+TOKEN = "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"
 
 
 def read_from_arduino():
