@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoilSense</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to SoilSense</h1>
+    </header>
+    <main>
+        <p>Your go-to resource for soil health and management.</p>
+        <div id="moisture">Loading soil moisture...</div>
+    </main>
+    <footer>
+        <p>&copy; 2024 SoilSense. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+<script>
+async function fetchSoilData() {
+    const response = await fetch("https://YOUR_USERNAME.github.io/YOUR_REPO/data.json");
+    const data = await response.json();
+    document.getElementById("moisture").textContent = `Soil Moisture: ${data.soil_moisture}`;
+}
+
+// Call the function periodically
+setInterval(fetchSoilData, 5000);  // Update every 5 seconds
+fetchSoilData();  // Initial call
+</script>
