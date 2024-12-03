@@ -21,7 +21,7 @@
 
 <script>
 async function fetchSoilData() {
-    const response = await fetch("https://YOUR_USERNAME.github.io/YOUR_REPO/data.json");
+    const response = await fetch("https://rcg270.github.io/soilsense/data.json");
     const data = await response.json();
     document.getElementById("moisture").textContent = `Soil Moisture: ${data.soil_moisture}`;
 }
