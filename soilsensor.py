@@ -3,13 +3,25 @@ import requests
 import time
 import json
 import base64
+import os
+from dotenv import load_dotenv
 
-# Serial port settings (update COM port as needed)
+# Serial port settings (update port as needed)
 arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
 
-# Replace with your GitHub Pages repository (static JSON file or endpoint)
+# Replace with your own GitHub Pages repository (static JSON file or endpoint)
 DATA_URL = "https://api.github.com/repos/rcg270/soilsense/contents/data.json"
-TOKEN = "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"
+# Load environment variables from .env file
+# create a .env file in the same directory as this script with
+# your GitHub token if you want to use this code
+load_dotenv()
+
+# Retrieve the GitHub token
+TOKEN = os.getenv("TOKEN")
+
+if not TOKEN:
+    print("Error: GitHub token not found in environment variables.")
+    quit()
 
 
 def read_from_arduino():
