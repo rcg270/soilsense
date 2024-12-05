@@ -8,4 +8,3 @@ To use this on github, you need to request a token. Then, run the following comm
 
 cat > .env your-token-here
 dassit.
-
