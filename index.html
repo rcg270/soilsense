@@ -3,15 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoilSense</title>
+    <title>Soilsense</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+/* replace {'s with {{'s because of the micropython linter' */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        .logo h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        h1, h2 {
+            color: #33532A;
+        }
+        .card {
+            padding: 15px;
+            margin-bottom: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>SoilSense</h1>
-    </header>
-    <main>
+    <div class="header">
+        <div class="logo">
+            <img src="https://storage.googleapis.com/a1aa/image/CFqWuABgn5LxAV5SfNqNTbrQWpIxnc0f8WLL5TDvL76R0j9TA.jpg" alt="A simple logo with a green leaf and a water droplet representing soil moisture" width="50" height="50">
+            <h1>SoilSense</h1>
+        </div>
+    </div>
+    <h1>SoilSense Web Server</h1>
+    <div class="card">
+        <h2>Soil Moisture</h2>
+        <p>Raw Value:
+            <div id="moisture">...Loading soil moisture...</div>
+        </p>
+        <p>Soil Moisture: {moisture_percent}%</p>
+        <p>Recommended Moisture: {required_moisture}%</p>
+    </div>
+    <div class="card">
+        <p>Current Plant: {current_plant}</p>
+    </div>
+    <div class="card">
+        </form>
+        <p>LED State: {state}</p>
+    </div>
         <p>Check your soil :P.</p>
-        <div id="moisture">Loading soil moisture...</div>
     </main>
     <footer>
         <p>&copy; 2024 SoilSense. All rights reserved.</p>
