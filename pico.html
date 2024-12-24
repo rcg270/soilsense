@@ -1,60 +1,51 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Soilsense</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <style>
-        /* replace {'s with {{'s because of the micropython linter' */
-        body {
+        body {{
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #140202;
-            color: #070707;
-            background: url('img/WP.jpg') repeat-y;
-
-        }
-
-        .header {
+            background-color: #f9f9f9;
+            color: #333;
+            background: url('https://www.everwallpaper.co.uk/cdn/shop/products/green-vines-wallpaper-mural-plain.jpg?v=1648015909') repeat;
+            /* this background can definitely be changed. its whateva */
+        }}
+        .header {{
             background-color: #4CAF50;
             color: white;
             padding: 20px;
             text-align: center;
-        }
-
-        .logo {
+        }}
+        .logo {{
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .logo img {
+        }}
+        .logo img {{
             width: 50px;
             height: 50px;
             margin-right: 15px;
-        }
-
-        .logo h1 {
+        }}
+        .logo h1 {{
             margin: 0;
             font-size: 2em;
-        }
-
-        h1,
-        h2 {
+        }}
+        h1, h2 {{
             color: #33532A;
-        }
-
-        .card {
+        }}
+        .card {{
             padding: 15px;
             margin-bottom: 20px;
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        button {
+        }}
+        button {{
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -66,32 +57,13 @@
             margin: 4px 2px;
             cursor: pointer;
             border-radius: 5px;
-        }
-        .form-inline {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .form-inline input {
-            padding: 5px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+        }}
     </style>
 </head>
-
 <body>
-    <div class="vines left"></div>
-    <div class="vines right"></div>
-
     <div class="header">
         <div class="logo">
-            <img src="https://storage.googleapis.com/a1aa/image/CFqWuABgn5LxAV5SfNqNTbrQWpIxnc0f8WLL5TDvL76R0j9TA.jpg"
-                alt="A simple logo with a green leaf and a water droplet representing soil moisture" width="50"
-                height="50">
+            <img src="https://storage.googleapis.com/a1aa/image/CFqWuABgn5LxAV5SfNqNTbrQWpIxnc0f8WLL5TDvL76R0j9TA.jpg" alt="A simple logo with a green leaf and a water droplet representing soil moisture" width="50" height="50">
             <h1>SoilSense</h1>
         </div>
     </div>
@@ -100,28 +72,92 @@
         <h2>Soil Moisture</h2>
         <p>Raw Value: {raw_value}</p>
         <p>Soil Moisture: {moisture_percent}%</p>
-        <p>Recommended Moisture: {required_moisture}%</p>
-        <form action="./getsoil">
+        <p>Current Plant: <span id="current-plant-name">{current_plant}</span></p>
+        <p>Recommended Moisture: <span id="required-moisture">{required_moisture}%</span></p>
+        <form action="/getsoil" accept-charset="UTF-8">
             <button>Get Soil Measurement</button>
         </form>
-
     </div>
     <div class="card">
-        <h2>Select Plant</h2>
-        <form action="./plant?Monsterra">
-            <button>Monsterra</button>
-        </form>
-        <form action="./plant?Flamingo">
-            <button>Flamingo Plant</button>
-        </form>
-        <p>Current Plant: {current_plant}</p>
+        <h2>Available Plants</h2>
+        <select id="plant-selector"></select>
+        <button id="confirm-btn">Confirm</button> 
+        <ul id="plants-list">
+            <!-- JavaScript will populate this list -->
+        </ul>
     </div>
+
+    <div class="card">
+        <h2>Add Plant</h2>
+        <form action="/plant/add_plant" method="get" accept-charset="UTF-8">
+            <label for="plant_name">Plant Name:</label>
+            <input type="text" id="plant_name" name="add_plant" required>
+            <label for="moisture">Required Moisture:</label>
+            <input type="number" id="moisture" name="moisture" required>
+            <button type="submit">Add Plant</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Remove Plant</h2>
+        <form action="/plant/remove_plant" method="get" accept-charset="UTF-8">
+            <label for="plant_name">Plant Name:</label>
+            <input type="text" id="plant_name" name="remove_plant" required>
+            <button type="submit">Remove Plant</button>
+        </form>
+    </div>
+
     <div class="card">
         <h2>GIT Control</h2>
-        <form action="./upload">
+        <form action="/upload" accept-charset="UTF-8">
             <button>Upload</button>
         </form>
     </div>
-</body>
 
+    <script>
+        // Check if the plant data is being passed correctly
+        console.log("Received plant data as JSON:", '{plants_json}');
+
+        try {{
+            console.log("inside try");
+            var plants = JSON.parse('{plants_json}');
+            console.log("Parsed plants data:", plants);
+
+            var plantsList = document.getElementById('plants-list');
+            var plantSelector = document.getElementById('plant-selector');
+            const currentPlantElement = document.getElementById('current-plant-name');
+            const requiredMoistureElement = document.getElementById('required-moisture');
+            for (plant in plants) {{
+                const option = document.createElement('option');
+                option.value = plant;
+                option.textContent = plant;
+                plantSelector.appendChild(option);
+            }}
+            let currentPlant = "{current_plant}";
+            let requiredMoisture = plants[currentPlant];
+
+            currentPlantElement.textContent = currentPlant;
+            requiredMoistureElement.textContent = requiredMoisture;
+
+            // Listen for changes in the plant selector and confirm button
+            document.getElementById('confirm-btn').addEventListener('click', function () {{
+                const selectedPlant = plantSelector.value;
+
+                if (selectedPlant && plants[selectedPlant] !== undefined) {{
+                    // Update the current plant and recommended moisture
+                    currentPlantElement.textContent = selectedPlant;
+                    requiredMoistureElement.textContent = plants[selectedPlant];
+                    console.log("Selected Plant:", selectedPlant);  // Debugging log
+                }} else {{
+                    console.error("Error: selectedPlant is undefined or empty");
+                }}
+            }});
+
+
+        }} catch (e) {{
+            console.error("Error parsing plants JSON:", e);
+        }}
+    </script>
+
+
+</body>
 </html>

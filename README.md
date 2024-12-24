@@ -29,7 +29,8 @@ For this project, dedicated to my lovely girlfriend, a RPI pico W and a generic 
    ```bash
    git clone git@github.com:rcg270/soilsense.git
 3. Edit the main.py file to add your wifi ssid and pw. Optional to add, else remove: token, data_url. You can request your data url from github directly https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens.
-4. Modify the pico.html file to include double brackets {}'s. This is needed because the micropython linter cannot handle brackets correctly.
+4. Also check AIR_VALUE and WATER_VARIABLE these depend on your sensor and should be changed accordingly. WATER_VARIABLE should be measured when the sensor is fully submerged in water, and AIR_VALUE when the sensor is in the air in the room where you wish to use the device.
+5. Modify the pico.html file to include double brackets {}'s. This is needed because the micropython linter cannot handle brackets correctly.
 so:
 ```html
 body {
@@ -55,7 +56,7 @@ body {{
         }}
 ```
 
-5. Upload all files to your Pico W.
+6. Upload all files to your Pico W.
 
 ## Usage Instructions
 1. After doing the Setup, run main.py.
