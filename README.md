@@ -61,7 +61,8 @@ body {{
 ## Usage Instructions
 1. After doing the Setup, run main.py.
 2. If you're using Thonny, the console will show the IP where the Pico W is hosting the website.
-- Alternatively, you can use ```ifconfig``` to figure out your ipv4 address (e.g., 192.168.1.5) and subnet (something like 192.168.1.0/24), and then ```nmap -sn (your.sub.net/xx)``` (in this case 192.168.1.0/24) to find out which device is the RPI. The hostname should be something like raspberrypi.local. Otherwise you can use trial and error to find the correct ip.
+- Alternatively, on linux, you can use ```ipconfig``` to figure out your ipv4 address (e.g., 192.168.1.5) and subnet (something like 192.168.1.0/24), and then ```nmap -sn (your.sub.net/xx)``` (in this case 192.168.1.0/24) to find out which device is the RPI. The hostname should be something like raspberrypi.local. Otherwise you can use trial and error to find the correct ip.
+- On windows, use a tool like https://www.advanced-ip-scanner.com/ to do pretty much the same as described before.
 3. Open the ip on a device connected to the same WIFI as is described in main.py.
 4. Select the plant you are using or add your own.
 5. Use the Get Soil Measurement button on the site to update the page with the accurate soil measurement!
